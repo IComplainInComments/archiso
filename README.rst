@@ -17,6 +17,7 @@ The following packages need to be installed to be able to create an image with t
 * e2fsprogs
 * erofs-utils (optional)
 * findutils
+* grub
 * gzip
 * libarchive
 * libisoburn
@@ -120,54 +121,57 @@ To install archiso system-wide use the included ``Makefile``:
 
    make install
 
-Optionally install archiso's mkinitcpio hooks:
-
-.. code:: sh
-
-   make install-initcpio
-
 Optional features
 
 The iso image contains a GRUB environment block holding the iso name and version. This allows to
 boot the iso image from GRUB with a version specific cow directory to mitigate overlay clashes.
 
 .. code:: sh
-     loopback loop archlinux.iso
-     load_env -f (loop)/arch/grubenv
-     linux (loop)/arch/boot/x86_64/vmlinuz-linux ... \
-         cow_directory=${NAME}/${VERSION} ...
-     initrd (loop)/arch/boot/x86_64/initramfs-linux-lts.img
+
+   loopback loop archlinux.iso
+   load_env -f (loop)/boot/grub/grubenv
+   linux (loop)/arch/boot/x86_64/vmlinuz-linux ... \
+       cow_directory=${NAME}/${VERSION} ...
+   initrd (loop)/arch/boot/x86_64/initramfs-linux-lts.img
 
 Contribute
 ==========
 
 Development of archiso takes place on Arch Linux' Gitlab: https://gitlab.archlinux.org/archlinux/archiso.
 
-Please read our distribution-wide `Code of Conduct <https://wiki.archlinux.org/index.php/Code_of_conduct>`_ before
+Please read our distribution-wide `Code of Conduct <https://terms.archlinux.org/docs/code-of-conduct/>`_ before
 contributing, to understand what actions will and will not be tolerated.
 
 Read our `contributing guide <CONTRIBUTING.rst>`_ to learn more about how to provide fixes or improvements for the code
 base.
 
 Discussion around archiso takes place on the `arch-releng mailing list
-<https://lists.archlinux.org/listinfo/arch-releng>`_ and in `#archlinux-releng
-<ircs://chat.freenode.net/archlinux-releng>`_ on `freenode.net <https://freenode.net/>`_.
+<https://lists.archlinux.org/mailman3/lists/arch-releng.lists.archlinux.org/>`_ and in `#archlinux-releng
+<ircs://irc.libera.chat/archlinux-releng>`_ on `Libera Chat <https://libera.chat/>`_.
 
 All past and present authors of archiso are listed in `AUTHORS <AUTHORS.rst>`_.
 
 Releases
 ========
 
-`Releases of archiso <https://gitlab.archlinux.org/archlinux/archiso/-/tags>`_ are created by its current maintainer
-`David Runge <https://gitlab.archlinux.org/dvzrv>`_. Tags are signed using the PGP key with the ID
-``C7E7849466FE2358343588377258734B41C31549``.
+`Releases of archiso <https://gitlab.archlinux.org/archlinux/archiso/-/tags>`_ are created by their current maintainers
 
-To verify a tag, first import the relevant PGP key:
+- `David Runge <https://gitlab.archlinux.org/dvzrv>`_ (``991F6E3F0765CF6295888586139B09DA5BF0D338``)
+- `nl6720 <https://gitlab.archlinux.org/nl6720>`_ (``BB8E6F1B81CF0BB301D74D1CBF425A01E68B38EF``)
+
+Tags are signed using respective PGP keys.
+
+To verify a tag, first import the relevant PGP key(s):
 
 .. code:: sh
 
   gpg --auto-key-locate wkd --search-keys dvzrv@archlinux.org
 
+or
+
+.. code:: sh
+
+  gpg --auto-key-locate keyserver --recv-keys BB8E6F1B81CF0BB301D74D1CBF425A01E68B38EF
 
 Afterwards a tag can be verified from a clone of this repository:
 

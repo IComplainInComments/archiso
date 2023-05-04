@@ -1,15 +1,10 @@
-#
-# SPDX-License-Identifier: GPL-3.0-or-later
-
 [Match]
-Type=ether
+# Matching with "Type=ether" causes issues with containers because it also matches virtual Ethernet interfaces (veth*).
+# See https://bugs.archlinux.org/task/70892
+# Instead match by globbing the network interface name.
+Name=en*
+Name=eth*
 
 [Network]
 DHCP=yes
 IPv6PrivacyExtensions=yes
-
-[DHCPv4]
-RouteMetric=512
-
-[DHCPv6]
-RouteMetric=512

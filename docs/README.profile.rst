@@ -10,6 +10,7 @@ An archiso profile consists of several configuration files and a directory for f
    ├── airootfs/
    ├── efiboot/
    ├── syslinux/
+   ├── grub/
    ├── bootstrap_packages.arch
    ├── packages.arch
    ├── pacman.conf
@@ -45,6 +46,10 @@ The image file is constructed from some of the variables in ``profiledef.sh``: `
 
   - ``bios.syslinux.mbr``: Syslinux for x86 BIOS booting from a disk
   - ``bios.syslinux.eltorito``: Syslinux for x86 BIOS booting from an optical disc
+  - ``uefi-ia32.grub.esp``: GRUB for IA32 UEFI booting from a disk
+  - ``uefi-ia32.grub.eltorito``: GRUB for IA32 UEFI booting from an optical disc
+  - ``uefi-x64.grub.esp``: GRUB for x86_64 UEFI booting from a disk
+  - ``uefi-x64.grub.eltorito``: GRUB for x86_64 UEFI booting from an optical disc
   - ``uefi-x64.systemd-boot.esp``: systemd-boot for x86_64 UEFI booting from a disk
   - ``uefi-x64.systemd-boot.eltorito``: systemd-boot for x86_64 UEFI booting from an optical disc
     Note that BIOS El Torito boot mode must always be listed before UEFI El Torito boot mode.
@@ -132,7 +137,7 @@ The following *custom template identifiers* are understood and will be replaced 
 respective variables in ``profiledef.sh``:
 
 * ``%ARCHISO_LABEL%``: Set this using the ``iso_label`` variable in ``profiledef.sh``.
-* ``%INSTALL_DIR%``: Set this using the ``iso_label`` variable in ``profiledef.sh``.
+* ``%INSTALL_DIR%``: Set this using the ``install_dir`` variable in ``profiledef.sh``.
 * ``%ARCH%``: Set this using the ``arch`` variable in ``profiledef.sh``.
 
 
@@ -158,6 +163,19 @@ This directory is mandatory when the ``bios.syslinux.mbr`` or the ``bios.syslinu
 ``profiledef.sh``.
 It contains configuration files for `syslinux <https://wiki.syslinux.org/wiki/index.php?title=SYSLINUX>`_ or `isolinux
 <https://wiki.syslinux.org/wiki/index.php?title=ISOLINUX>`_ , or `pxelinux
-<https://wiki.syslinux.org/wiki/index.php?title=PXELINUX>`_ used in the resuling image.
+<https://wiki.syslinux.org/wiki/index.php?title=PXELINUX>`_ used in the resulting image.
 
 The *custom template identifiers* are understood in all `.cfg` files in this directory.
+
+grub
+----
+
+This directory is mandatory when any of the following bootmodes is used in ``profiledef.sh``:
+
+- ``uefi-ia32.grub.esp`` or
+- ``uefi-ia32.grub.eltorito`` or
+- ``uefi-x64.grub.esp`` or
+- ``uefi-x64.grub.eltorito``
+
+It contains configuration files for `GRUB <https://www.gnu.org/software/grub/>`_
+used in the resulting image.

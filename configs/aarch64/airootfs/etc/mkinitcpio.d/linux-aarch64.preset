@@ -2,7 +2,7 @@
 
 PRESETS=('archiso')
 
-ALL_kver="5.17.1-1-aarch64-ARCH"
+ALL_kver="/boot/Image"
 ALL_config="/etc/mkinitcpio.conf"
 
 archiso_image="/boot/initramfs-linux.img"

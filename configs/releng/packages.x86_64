@@ -1,24 +1,22 @@
-#
-# SPDX-License-Identifier: GPL-3.0-or-later
 alsa-utils
 amd-ucode
 arch-install-scripts
 archinstall
 b43-fwcutter
 base
-bind-tools
+bind
 brltty
 broadcom-wl
 btrfs-progs
 clonezilla
 cloud-init
-crda
 cryptsetup
 darkhttpd
 ddrescue
 dhclient
 dhcpcd
 diffutils
+dmidecode
 dmraid
 dnsmasq
 dosfstools
@@ -36,10 +34,10 @@ gpart
 gpm
 gptfdisk
 grml-zsh-config
+grub
 hdparm
+hyperv
 intel-ucode
-ipw2100-fw
-ipw2200-fw
 irssi
 iw
 iwd
@@ -52,6 +50,7 @@ libusb-compat
 linux
 linux-atm
 linux-firmware
+linux-firmware-marvell
 livecd-sounds
 lsscsi
 lvm2
@@ -61,6 +60,7 @@ man-pages
 mc
 mdadm
 memtest86+
+memtest86+-efi
 mkinitcpio
 mkinitcpio-archiso
 mkinitcpio-nfs-utils
@@ -74,6 +74,8 @@ nilfs-utils
 nmap
 ntfs-3g
 nvme-cli
+open-iscsi
+open-vm-tools
 openconnect
 openssh
 openvpn
@@ -83,7 +85,9 @@ partimage
 pcsclite
 ppp
 pptpclient
+pv
 qemu-guest-agent
+refind
 reflector
 reiserfsprogs
 rp-pppoe
@@ -100,7 +104,6 @@ syslinux
 systemd-resolvconf
 tcpdump
 terminus-font
-termite-terminfo
 testdisk
 tmux
 tpm2-tss
