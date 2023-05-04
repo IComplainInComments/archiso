@@ -500,12 +500,6 @@ _make_efi_dir_on_iso9660_for_aarch64() {
              s|%ARCH%|${arch}|g" \
             "${_conf}" > "${isofs_dir}/loader/entries/${_conf##*/}"
     done
-
-    # edk2-shell based UEFI shell
-    # shellx64.efi is picked up automatically when on /
-    if [[ -e "${pacstrap_dir}/usr/share/edk2-shell/x64/Shell_Full.efi" ]]; then
-        install -m 0644 -- "${pacstrap_dir}/usr/share/edk2-shell/x64/Shell_Full.efi" "${isofs_dir}/shellx64.efi"
-    fi
     _msg_info "Done!"
 }
 
