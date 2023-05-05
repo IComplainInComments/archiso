@@ -20,6 +20,7 @@ dmraid
 dnsmasq
 dosfstools
 efibootmgr
+erofs-utils
 espeakup
 ethtool
 exfatprogs
@@ -32,6 +33,7 @@ gpm
 gptfdisk
 grml-zsh-config
 hdparm
+hyperv
 irssi
 iwd
 jfsutils
@@ -71,6 +73,8 @@ partimage
 pcsclite
 ppp
 pptpclient
+pv
+qemu-guest-agent
 reiserfsprogs
 rp-pppoe
 rsync
