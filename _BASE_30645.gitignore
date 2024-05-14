@@ -1,0 +1,7 @@
+*~
+archiso-*.tar.gz*
+work/
+out/
+*.iso
+user-data
+meta-data

@@ -1,0 +1,16 @@
+*~
+*.tar
+*.tar.*
+work/
+out/
+codesigning*
+*.iso
+*.img
+*.cer
+*.crt
+*.key
+*.pem
+user-data
+meta-data
+network-config
+man/version.rst
