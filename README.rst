@@ -3,7 +3,7 @@ archiso
 =======
 
 The archiso project features scripts and configuration templates to build installation media (*.iso* images and
-*.tar bootstrap images) as well as netboot artifacts for BIOS and UEFI based systems on the x86_64 architecture.
+*.tar.gz* bootstrap images) as well as netboot artifacts for BIOS and UEFI based systems on the x86_64 architecture.
 Currently creating the images is only supported on Arch Linux but may work on other operating systems as well.
 
 Requirements
@@ -35,10 +35,6 @@ For running the images in a virtualized test environment the following packages 
 For linting the shell scripts the following package is required:
 
 * shellcheck
-
-For generating the man pages:
-
-* python-docutils
 
 Profiles
 ========

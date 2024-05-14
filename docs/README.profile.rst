@@ -48,19 +48,10 @@ The image file is constructed from some of the variables in ``profiledef.sh``: `
   - ``bios.syslinux.eltorito``: Syslinux for x86 BIOS booting from an optical disc
   - ``uefi-ia32.grub.esp``: GRUB for IA32 UEFI booting from a disk
   - ``uefi-ia32.grub.eltorito``: GRUB for IA32 UEFI booting from an optical disc
-<<<<<<< HEAD
   - ``uefi-x64.grub.esp``: GRUB for x86_64 UEFI booting from a disk
   - ``uefi-x64.grub.eltorito``: GRUB for x86_64 UEFI booting from an optical disc
   - ``uefi-x64.systemd-boot.esp``: systemd-boot for x86_64 UEFI booting from a disk
   - ``uefi-x64.systemd-boot.eltorito``: systemd-boot for x86_64 UEFI booting from an optical disc
-=======
-  - ``uefi-x64.grub.esp``: GRUB for x64 UEFI booting from a disk
-  - ``uefi-x64.grub.eltorito``: GRUB for x64 UEFI booting from an optical disc
-  - ``uefi-ia32.systemd-boot.esp``: systemd-boot for IA32 UEFI booting from a disk
-  - ``uefi-ia32.systemd-boot.eltorito``: systemd-boot for IA32UEFI booting from an optical disc
-  - ``uefi-x64.systemd-boot.esp``: systemd-boot for x64 UEFI booting from a disk
-  - ``uefi-x64.systemd-boot.eltorito``: systemd-boot for x64 UEFI booting from an optical disc
->>>>>>> upstream/master
     Note that BIOS El Torito boot mode must always be listed before UEFI El Torito boot mode.
 * ``arch``: The architecture (e.g. ``x86_64``) to build the image for. This is also used to resolve the name of the packages
   file (e.g. ``packages.x86_64``)
@@ -73,8 +64,6 @@ The image file is constructed from some of the variables in ``profiledef.sh``: `
   - ``erofs``: Create an EROFS image for the airootfs work directory
 * ``airootfs_image_tool_options``: An array of options to pass to the tool to create the airootfs image. ``mksquashfs`` and
   ``mkfs.erofs`` are supported. See ``mksquashfs --help`` or ``mkfs.erofs --help`` for all possible options
-* ``bootstrap_tarball_compression``: An array containing the compression program and arguments passed to it for
-  compressing the bootstrap tarball (defaults to ``cat``). For example: ``bootstrap_tarball_compression=(zstd -c -T0 --long -19)``.
 * ``file_permissions``: An associative array that lists files and/or directories who need specific ownership or
   permissions. The array's keys contain the path and the value is a colon separated list of owner UID, owner GID and
   access mode. E.g. ``file_permissions=(["/etc/shadow"]="0:0:400")``. When directories are listed with a trailing backslash (``/``) **all** files and directories contained within the listed directory will have the same owner UID, owner GID, and access mode applied recursively.
@@ -151,12 +140,6 @@ respective variables in ``profiledef.sh``:
 * ``%INSTALL_DIR%``: Set this using the ``install_dir`` variable in ``profiledef.sh``.
 * ``%ARCH%``: Set this using the ``arch`` variable in ``profiledef.sh``.
 
-Additionally there are also *custom template identifiers* have harcoded values set by ``mkarchiso`` that cannot be
-overridden:
-
-* ``%ARCHISO_UUID%``: the ISO 9660 modification date in UTC, i.e. its "UUID",
-* ``%ARCHISO_SEARCH_FILENAME%``: file path on ISO 9660 that can be used by GRUB to find the ISO volume
-  (**for GRUB ``.cfg`` files only**).
 
 efiboot
 -------

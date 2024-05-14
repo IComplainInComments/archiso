@@ -2,70 +2,59 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
+default:
+  image: "archlinux:latest"
+
+variables:
+  BUILD_SCRIPT: ./.gitlab/ci/build-inside-vm.sh
+  QEMU_BUILD_TIMEOUT: 2400
+  QEMU_VM_MEMORY: 3072
+  ARCHISO_COW_SPACE_SIZE: 2g
+
 stages:
-  - check
+  - lint
   - build
 
-check:
+shellcheck:
+  stage: lint
   before_script:
-    # NOTE: Install latest archlinux-keyring before upgrading system. In the
-    # future this should not be needed anymore when we can guarantee a valid
-    # keyring for longer:
-    # https://gitlab.archlinux.org/archlinux/archlinux-keyring/-/issues/4
-    - pacman -Sy --needed --noconfirm archlinux-keyring
     - pacman --noconfirm -Syu --needed make shellcheck
   script:
-    - make check
-  stage: check
-  interruptible: true
+    - make lint
 
 .build:
-  artifacts:
-    reports:
-      metrics: output/metrics.txt
-  before_script:
-    - pacman -Sy --needed --noconfirm archlinux-keyring
-    - pacman -Syu --needed --noconfirm arch-install-scripts bash dosfstools e2fsprogs erofs-utils gnupg grub jq libarchive libisoburn mtools openssl python-docutils squashfs-tools zsync
-  script:
-    - ./.gitlab/ci/build_archiso.sh ${BUILD_SCRIPT_ARGS}
+  variables:
+    PACKAGE_LIST: dosfstools e2fsprogs erofs-utils jq libisoburn mtools openssl qemu-headless squashfs-tools zsync
   stage: build
-  tags:
-    - vm
+  before_script:
+    - pacman -Syu --needed --noconfirm qemu-headless
+  script:
+    - ./.gitlab/ci/build-host.sh
+  after_script:
+    - PROFILE=($BUILD_SCRIPT_ARGS) && cp -- "output/${PROFILE[0]}/metrics.txt" .
+  artifacts:
+    name: "output"
+    paths:
+      - "output/*/*"
+    expire_in: 2d
+    reports:
+      metrics: metrics.txt
 
 build_short:
   extends: .build
   parallel:
     matrix:
+      # baseline does not support netboot with codesinging
+      # https://gitlab.archlinux.org/archlinux/archiso/-/issues/132
       - BUILD_SCRIPT_ARGS: baseline bootstrap
       - BUILD_SCRIPT_ARGS: releng bootstrap
-  only:
-    refs:
-      - master
-      - merge_requests
-    changes:
-      - archiso/*
-      - configs/**/*
-      - Makefile
-      - .gitlab-ci.yml
-      - .gitlab/ci/*
-  interruptible: true
 
 build_long:
   extends: .build
+  tags:
+    - fast-single-thread
   parallel:
     matrix:
       - BUILD_SCRIPT_ARGS: baseline iso
-      - BUILD_SCRIPT_ARGS: baseline netboot
       - BUILD_SCRIPT_ARGS: releng iso
       - BUILD_SCRIPT_ARGS: releng netboot
-  only:
-    refs:
-      - master
-      - merge_requests
-    changes:
-      - archiso/*
-      - configs/**/*
-      - Makefile
-      - .gitlab-ci.yml
-      - .gitlab/ci/*
-  interruptible: true

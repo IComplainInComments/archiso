@@ -1,20 +1,8 @@
 *~
-*.tar
-*.tar.*
+archiso-*.tar.gz*
 work/
 out/
-codesigning*
 *.iso
-*.img
-*.cer
-*.crt
-*.key
-*.pem
 user-data
 meta-data
-<<<<<<< HEAD
 .DS_Store
-=======
-network-config
-man/version.rst
->>>>>>> upstream/master

@@ -11,6 +11,7 @@
 # - qemu
 # - edk2-ovmf (when UEFI booting)
 
+
 set -eu
 
 print_help() {
@@ -44,11 +45,11 @@ cleanup_working_dir() {
 }
 
 copy_ovmf_vars() {
-    if [[ ! -f '/usr/share/edk2/x64/OVMF_VARS.4m.fd' ]]; then
-        printf 'ERROR: %s\n' "OVMF_VARS.4m.fd not found. Install edk2-ovmf."
+    if [[ ! -f '/usr/share/edk2-ovmf/x64/OVMF_VARS.fd' ]]; then
+        printf 'ERROR: %s\n' "OVMF_VARS.fd not found. Install edk2-ovmf."
         exit 1
     fi
-    cp -av -- '/usr/share/edk2/x64/OVMF_VARS.4m.fd' "${working_dir}/"
+    cp -av -- '/usr/share/edk2-ovmf/x64/OVMF_VARS.fd' "${working_dir}/"
 }
 
 check_image() {
@@ -67,13 +68,13 @@ run_image() {
         copy_ovmf_vars
         if [[ "${secure_boot}" == 'on' ]]; then
             printf '%s\n' 'Using Secure Boot'
-            local ovmf_code='/usr/share/edk2/x64/OVMF_CODE.secboot.4m.fd'
+            local ovmf_code='/usr/share/edk2-ovmf/x64/OVMF_CODE.secboot.fd'
         else
-            local ovmf_code='/usr/share/edk2/x64/OVMF_CODE.4m.fd'
+            local ovmf_code='/usr/share/edk2-ovmf/x64/OVMF_CODE.fd'
         fi
         qemu_options+=(
             '-drive' "if=pflash,format=raw,unit=0,file=${ovmf_code},read-only=on"
-            '-drive' "if=pflash,format=raw,unit=1,file=${working_dir}/OVMF_VARS.4m.fd"
+            '-drive' "if=pflash,format=raw,unit=1,file=${working_dir}/OVMF_VARS.fd"
             '-global' "driver=cfi.pflash01,property=secure,value=${secure_boot}"
         )
     fi
