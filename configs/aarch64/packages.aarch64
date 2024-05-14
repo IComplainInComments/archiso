@@ -76,7 +76,6 @@ pptpclient
 pv
 qemu-guest-agent
 reiserfsprogs
-rp-pppoe
 rsync
 rxvt-unicode-terminfo
 sdparm
